@@ -87,3 +87,7 @@ SELECT `exam_id` AS `appello`, ROUND(AVG(`vote`)) AS 'media_voto'
 
 
 -- 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+
+SELECT  `department_id`as 'Dipartimento', COUNT(`id`) AS 'Totale Lauree Dipartimento'
+FROM `degrees`
+GROUP BY `department_id`
