@@ -31,6 +31,18 @@ SELECT *
 FROM `students`
 WHERE `date_of_birth` < '1992-01-01';
 
+ALTERNATIVA 
+
+SELECT * 
+FROM `students`
+WHERE TIMESTAMPDIFF(YEAR, 'date_of_birth', CURDATE()) > 30;
+
+ALTERNATIVA
+
+SELECT * 
+FROM `students`
+WHERE 'date_of_birth' < DATE_SUB(CURDATE(), INTERVAL 30 YEAR);
+
 -- 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di laurea (286)
 
 SELECT * FROM `courses`
@@ -43,15 +55,22 @@ WHERE `year` = 1 AND `period` = 'I semestre'
 SELECT * FROM `exams`
 WHERE `date` = '20-06-20' AND `hour`> '14:00:00'
 
+ALTERNATIVA
+
+SELECT * FROM `exams`
+WHERE `date` = '20-06-20' AND HOUR(`hour`) > 14;
+
 
 -- 6. Selezionare tutti i corsi di laurea magistrale (38)
+
 SELECT * 
 FROM `degrees`
 WHERE `level` = 'magistrale'
 
 
 -- 7. Da quanti dipartimenti è composta l'università? (12)
-SELECT COUNT(*) as 'Numeri Dipartimenti' 
+
+SELECT COUNT(*) as 'numero_dipartimenti' 
 FROM `departments`
 
 -- 8. Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
@@ -69,21 +88,21 @@ FROM `departments`
 
 SELECT COUNT(*) AS `numero_studenti`, YEAR(`enrolment_date`) AS `anno`
     FROM `students`
-    GROUP BY YEAR(`enrolment_date`)
+    GROUP BY YEAR(`anno`)
 
 
 -- 2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
 
-SELECT COUNT('id') AS `numero_insegnanti`, `office_address`AS 'indirizzo ufficcio'
+SELECT COUNT('id') AS `numero_insegnanti`, `office_address`AS 'indirizzo ufficio'
     FROM `teachers`
     GROUP BY (`office_address`)
 
 
 -- 3. Calcolare la media dei voti di ogni appello d'esame
 
-SELECT `exam_id` AS `appello`, ROUND(AVG(`vote`)) AS 'media_voto'
+SELECT `exam_id` AS `appello`, ROUND(AVG(`vote`)) AS 'media_voti'
     FROM `exam_student`
-    GROUP BY `exam_id`
+    GROUP BY `exam_id`;
 
 
 -- 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
